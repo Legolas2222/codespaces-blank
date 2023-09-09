@@ -7,15 +7,23 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TodoistClone.Application.Common.Interfaces.Authentication;
+using TodoistClone.Application.Common.Interfaces.Services;
 
 namespace TodoistClone.Infrastructure.Authentication
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+
+        public JwtTokenGenerator(IDateTimeProvider dateTimeProvider)
+        {
+            _dateTimeProvider = dateTimeProvider;
+        }
+
         public string GenerateToken(Guid userId, string firstName, string lastName) 
         {
             var signingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super-secret-key")),
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes("extremely-secret-key-that-no-one-knows")),
                 SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -28,7 +36,7 @@ namespace TodoistClone.Infrastructure.Authentication
 
             var securityToken = new JwtSecurityToken(
                 claims: claims, signingCredentials: signingCredentials, issuer: "TodoistClone",
-                expires: DateTime.Now.AddDays(1));
+                expires: _dateTimeProvider.UtcNow.AddMinutes(60));
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
         }

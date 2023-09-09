@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TodoistClone.Application.Common.Interfaces.Authentication;
+using TodoistClone.Application.Common.Interfaces.Services;
 using TodoistClone.Infrastructure.Authentication;
+using TodoistClone.Infrastructure.Services;
 
 namespace TodoistClone.Infrastructure
 {
@@ -10,6 +12,7 @@ namespace TodoistClone.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             return services;
         }
 

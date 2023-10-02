@@ -25,10 +25,10 @@ namespace TodoistClone.Api.Controllers
                 request.Password);
 
             var response = new AuthenticationResponse(
-                authResult.Id,
-                authResult.FirstName,
-                authResult.LastName,
-                authResult.Email,
+                authResult.user.Id,
+                authResult.user.Email,
+                authResult.user.Email,
+                authResult.user.Email,
                 authResult.Token);
 
             return Ok(response);
@@ -42,10 +42,10 @@ namespace TodoistClone.Api.Controllers
                 request.Password);
 
             var response = new AuthenticationResponse(
-                authResult.Id,
-                authResult.FirstName,
-                authResult.LastName,
-                authResult.Email,
+                authResult.user.Id,
+                authResult.user.Email,
+                authResult.user.Email,
+                authResult.user.Email,
                 authResult.Token);
 
             return Ok(response);

@@ -1,9 +1,8 @@
-﻿namespace TodoistClone.Application.Services.Authentication
+﻿using TodoistClone.Domain.Entities;
+
+namespace TodoistClone.Application.Services.Authentication
 {
     public record AuthenticationResult(
-        Guid Id,
-        string FirstName, 
-        string LastName, 
-        string Email, 
+        User user,
         string Token);
 }

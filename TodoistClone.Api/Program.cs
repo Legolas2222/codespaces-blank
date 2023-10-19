@@ -1,3 +1,4 @@
+using TodoistClone.Api.Middleware;
 using TodoistClone.Application;
 using TodoistClone.Infrastructure;
 
@@ -22,11 +23,14 @@ if (app.Environment.IsDevelopment())
 }
 */
 var app = builder.Build();
-
+{
 //app.UseHttpsRedirection();
+app.UseMiddleware<ErrorHandlingMiddlware>();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+}

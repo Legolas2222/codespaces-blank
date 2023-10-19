@@ -26,8 +26,8 @@ namespace TodoistClone.Api.Controllers
 
             var response = new AuthenticationResponse(
                 authResult.user.Id,
-                authResult.user.Email,
-                authResult.user.Email,
+                authResult.user.FirstName,
+                authResult.user.LastName,
                 authResult.user.Email,
                 authResult.Token);
 
@@ -43,8 +43,8 @@ namespace TodoistClone.Api.Controllers
 
             var response = new AuthenticationResponse(
                 authResult.user.Id,
-                authResult.user.Email,
-                authResult.user.Email,
+                authResult.user.FirstName,
+                authResult.user.LastName,
                 authResult.user.Email,
                 authResult.Token);
 

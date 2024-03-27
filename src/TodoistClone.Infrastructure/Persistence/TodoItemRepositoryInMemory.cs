@@ -6,28 +6,47 @@ namespace TodoistClone.Infrastructure.Persistence;
 public class TodoItemRepositoryInMemory : ITodoItemRepository
 {
     private List<TodoItem> todos = new();
-    public Task<Guid> Create()
+    public async Task<TodoItem> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        var item = todos.Find(x => x.Id == id);
+        return item;
+    }
+    public async Task<IEnumerable<TodoItem>> GetAll()
+    {
+        return todos.AsEnumerable<TodoItem>();
     }
 
-    public Task<bool> Delete(Guid id)
+    public async Task<Guid> Add(TodoItem item)
     {
-        throw new NotImplementedException();
+        todos.Add(item);
+        return item.Id;
     }
 
-    public Task<IEnumerable<TodoItem>> GetAll()
+    public async Task<Guid> Update(Guid id, TodoItem newItem)
     {
-        throw new NotImplementedException();
+        var item = todos.Find(x => x.Id == id);
+        if (item is not null)
+        {
+            todos.Remove(item);
+            item.Description = newItem.Description is null ? item.Description : newItem.Description;
+            item.Title = newItem.Title is null ? item.Title : newItem.Title;
+            item.Done = newItem.Done;
+            todos.Add(item);
+        }
+        return item.Id;
+
+
+    }
+    public async Task<bool> Delete(Guid id)
+    {
+        var item = todos.Find(x => x.Id == id);
+        if (item is not null)
+        {
+            todos.Remove(item);
+            return true;
+        }
+        return false;
     }
 
-    public Task<TodoItem> GetById(Guid id)
-    {
-        throw new NotImplementedException();
-    }
 
-    public Task<TodoItem> Update(TodoItem item)
-    {
-        throw new NotImplementedException();
-    }
 }

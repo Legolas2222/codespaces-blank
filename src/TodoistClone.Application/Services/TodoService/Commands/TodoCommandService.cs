@@ -1,7 +1,8 @@
 using System.ComponentModel;
 using TodoistClone.Application.Common.Interfaces.Persistence;
-using TodoistClone.Application.Services.TodoService.Commands.DTOs;
+using TodoistClone.Application.Services.TodoService.Commands.DTOs.Create;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Delete;
+using TodoistClone.Application.Services.TodoService.Commands.DTOs.Update;
 using TodoistClone.Application.Services.TodoService.Common.DTOs;
 using TodoistClone.Domain.Entities;
 
@@ -16,11 +17,18 @@ public class TodoCommandService : ITodoCommandService
         _todoitemrepository = todoitemrepository;
     }
 
-    public async Task<TodoItemCreateResult> Create(TodoItemCreateRequest request)
+    public async Task<TodoItemCreateResult> Add(TodoItemCreateRequest request)
     {
         //!Validation 
-        Guid id = await _todoitemrepository.Create();
-        
+        var todoItem = new TodoItem() {
+            Id = new Guid(),
+            Title = request.Title,
+            Description = request.Description,
+            Done = request.Done
+        };
+
+        Guid id = await _todoitemrepository.Add(todoItem);
+
         var respone = new TodoItemCreateResult(id);
         return respone;
     }
@@ -34,20 +42,22 @@ public class TodoCommandService : ITodoCommandService
         return respone;
     }
 
-    public async Task<TodoItemDTO> Update(TodoItemDTO newTodo)
+    public async Task<TodoItemUpdateResult> Update(TodoItemDTO data)
     {
         //!Validation
 
-        TodoItem result = await _todoitemrepository.Update(new TodoItem() {
-            Id = newTodo.Id,
-            Title = newTodo.Title,
-            Description = newTodo.Description,
-            Done = newTodo.Done
-        }); 
+        var helperItem = new TodoItem()
+        {
+            Id = data.Id,
+            Title = data.Title,
+            Description = data.Description,
+            Done = data.Done
+        };
+        Guid id = await _todoitemrepository.Update(data.Id, helperItem);
 
-        var respone = new TodoItemDTO(result.Id, result.Title, result.Description, result.Done);
+        var respone = new TodoItemUpdateResult(id);
 
         return respone;
-        
-    }   
+
+    }
 }

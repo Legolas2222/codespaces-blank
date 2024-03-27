@@ -1,4 +1,4 @@
-namespace TodoistClone.Application.Services.TodoService.Commands.DTOs;
+namespace TodoistClone.Application.Services.TodoService.Commands.DTOs.Create;
 
 public record TodoItemCreateRequest(
     string Title,

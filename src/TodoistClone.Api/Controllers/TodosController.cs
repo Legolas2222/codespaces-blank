@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoistClone.Application.Services.TodoService.Commands;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs;
+using TodoistClone.Application.Services.TodoService.Commands.DTOs.Create;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Delete;
 using TodoistClone.Application.Services.TodoService.Queries;
 using TodoistClone.Contracts.TodoContract;
@@ -14,7 +15,7 @@ namespace TodoistClone.Api.Controllers
         private readonly ITodoQueryService _todoQueryService;
         private readonly ITodoCommandService _todoCommandService;
 
-        public TodosController( ITodoQueryService todoQueryService, ITodoCommandService todoCommandService)
+        public TodosController(ITodoQueryService todoQueryService, ITodoCommandService todoCommandService)
         {
             _todoQueryService = todoQueryService;
             _todoCommandService = todoCommandService;
@@ -43,7 +44,7 @@ namespace TodoistClone.Api.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add(TodoPostRequest request)
         {
-            var todoResult = await _todoCommandService.Create(
+            var todoResult = await _todoCommandService.Add(
                 new TodoItemCreateRequest(
                 request.Title,
                 request.Description,
@@ -56,12 +57,14 @@ namespace TodoistClone.Api.Controllers
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete(string id) {
-            if (id is null) {
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (id is null)
+            {
                 return BadRequest();
             }
             var todoResult = await _todoCommandService.Delete(new TodoItemDeleteRequest(Guid.Parse(id)));
-        
+
             var response = new TodoDeleteRespone(todoResult.Done);
 
             return Ok(response);

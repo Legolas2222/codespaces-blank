@@ -20,12 +20,11 @@ public class TodoCommandService : ITodoCommandService
     public async Task<TodoItemCreateResult> Add(TodoItemCreateRequest request)
     {
         //!Validation 
-        var todoItem = new TodoItem() {
-            Id = new Guid(),
-            Title = request.Title,
-            Description = request.Description,
-            Done = request.Done
-        };
+        var todoItem = new TodoItem( 
+            request.Title,
+            request.Description,
+            request.Done
+        );
 
         Guid id = await _todoitemrepository.Add(todoItem);
 
@@ -46,14 +45,7 @@ public class TodoCommandService : ITodoCommandService
     {
         //!Validation
 
-        var helperItem = new TodoItem()
-        {
-            Id = data.Id,
-            Title = data.Title,
-            Description = data.Description,
-            Done = data.Done
-        };
-        Guid id = await _todoitemrepository.Update(data.Id, helperItem);
+        Guid id = await _todoitemrepository.Update(data.Id, data.Title, data.Description, data.Done);
 
         var respone = new TodoItemUpdateResult(id);
 

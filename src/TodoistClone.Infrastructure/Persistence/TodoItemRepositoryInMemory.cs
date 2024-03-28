@@ -22,15 +22,13 @@ public class TodoItemRepositoryInMemory : ITodoItemRepository
         return item.Id;
     }
 
-    public async Task<Guid> Update(Guid id, TodoItem newItem)
+    public async Task<Guid> Update(Guid id, string NewTitle, string NewDescription, bool NewCompletionStatus)
     {
         var item = todos.Find(x => x.Id == id);
         if (item is not null)
         {
             todos.Remove(item);
-            item.Description = newItem.Description is null ? item.Description : newItem.Description;
-            item.Title = newItem.Title is null ? item.Title : newItem.Title;
-            item.Done = newItem.Done;
+            item.Update(NewTitle, NewDescription, NewCompletionStatus);
             todos.Add(item);
         }
         return item.Id;

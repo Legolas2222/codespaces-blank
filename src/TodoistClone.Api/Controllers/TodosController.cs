@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoistClone.Application.Services.TodoService.Commands;
-using TodoistClone.Application.Services.TodoService.Commands.DTOs;
+using TodoistClone.Application.Services.TodoService.Commands.DTOs.Update;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Create;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Delete;
 using TodoistClone.Application.Services.TodoService.Queries;
 using TodoistClone.Contracts.TodoContract;
+using TodoistClone.Application.Services.TodoService.Common.DTOs;
 
 namespace TodoistClone.Api.Controllers
 {
@@ -53,6 +54,21 @@ namespace TodoistClone.Api.Controllers
 
             var response = new TodoPostResponse(todoResult.Id);
 
+            return Ok(response);
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> Update(TodoUpdateRequest request)
+        {
+            var result = await _todoCommandService.Update(
+            new TodoItemDTO(
+                request.Id,
+                request.NewTitle,
+                request.NewDescription,
+                request.NewCompletionStatus
+            ));
+
+            var response = new TodoPostResponse(result.Id);
             return Ok(response);
         }
 

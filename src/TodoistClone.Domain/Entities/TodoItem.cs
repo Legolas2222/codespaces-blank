@@ -16,10 +16,26 @@ namespace TodoistClone.Domain.Entities
             this.Done = Done;
         }
 
-        public void Update(string NewTitle, string NewDescription, bool NewCompletionStatus) {
-            this.Title = NewTitle;
-            this.Description = NewDescription;
-            this.Done = NewCompletionStatus;
+        public void Update(string? NewTitle = null, string? NewDescription = null)
+        {
+
+            if (NewTitle is not null)
+            {
+                this.Title = NewTitle;
+            }
+            if (NewDescription is not null)
+            {
+                this.Description = NewDescription;
+            }
+        }
+
+        public void SetCompletionStatus(bool newStatus)
+        {
+            this.Done = newStatus;
+        }
+        public void CompleteTask()
+        {
+            this.Done = true;
         }
     }
 }

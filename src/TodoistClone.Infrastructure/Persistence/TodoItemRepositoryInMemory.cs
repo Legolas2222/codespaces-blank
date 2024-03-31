@@ -28,7 +28,7 @@ public class TodoItemRepositoryInMemory : ITodoItemRepository
         if (item is not null)
         {
             todos.Remove(item);
-            item.Update(NewTitle, NewDescription, NewCompletionStatus);
+            item.Update(NewTitle, NewDescription);
             todos.Add(item);
         }
         return item.Id;

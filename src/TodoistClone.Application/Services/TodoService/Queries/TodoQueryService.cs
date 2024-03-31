@@ -1,5 +1,6 @@
 using TodoistClone.Application.Common.Interfaces.Persistence;
 using TodoistClone.Application.Services.TodoService.Common.DTOs;
+using TodoistClone.Domain.Entities;
 
 namespace TodoistClone.Application.Services.TodoService.Queries;
 
@@ -12,31 +13,38 @@ public class TodoQueryService : ITodoQueryService
     }
 
 
-    public async Task<IEnumerable<TodoItemDTO>> GetAll()
+    public async Task<List<TodoItemDTO>> GetAll()
     {
         //! Validation
         var result = await _todoItemRepository.GetAll(); 
 
-        var respone = new List<TodoItemDTO>();
+        var response = new List<TodoItemDTO>();
         foreach (var item in result) {
-            respone.Add(new TodoItemDTO(
+            response.Add(new TodoItemDTO(
                 item.Id,
                 item.Title,
                 item.Description,
                 item.Done));
         }
-        return (IEnumerable<TodoItemDTO>)result;
+        
+        return response;
     }
 
     public async Task<TodoItemDTO> GetById(Guid id)
     {
         //! Validation
-        var result = await _todoItemRepository.GetById(id);
-        var respone = new TodoItemDTO(
+        TodoItem? result = await _todoItemRepository.GetById(id);
+
+        if (result is not null)
+        {
+            var respone = new TodoItemDTO(
             result.Id,
             result.Title,
             result.Description,
             result.Done);
-        return respone;
+        return respone;    
+        }
+        throw new Exception($"The Todoitem with id {id} could not be found");
+        
     }
 }

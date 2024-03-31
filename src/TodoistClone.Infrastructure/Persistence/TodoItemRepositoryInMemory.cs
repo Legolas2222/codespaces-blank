@@ -5,11 +5,11 @@ namespace TodoistClone.Infrastructure.Persistence;
 
 public class TodoItemRepositoryInMemory : ITodoItemRepository
 {
-    private List<TodoItem> todos = new();
+    private static List<TodoItem> todos = [];
     public async Task<TodoItem> GetById(Guid id)
     {
         var item = todos.Find(x => x.Id == id);
-        return item;
+        return item is null ? throw new Exception("Provided ID did not match a db entry") : item;
     }
     public async Task<IEnumerable<TodoItem>> GetAll()
     {
@@ -22,16 +22,18 @@ public class TodoItemRepositoryInMemory : ITodoItemRepository
         return item.Id;
     }
 
-    public async Task<Guid> Update(Guid id, TodoItem newItem)
+    public async Task<Guid> Update(Guid id, string? NewTitle, string? NewDescription)
     {
         var item = todos.Find(x => x.Id == id);
         if (item is not null)
         {
             todos.Remove(item);
-            item.Description = newItem.Description is null ? item.Description : newItem.Description;
-            item.Title = newItem.Title is null ? item.Title : newItem.Title;
-            item.Done = newItem.Done;
+            item.Update(NewTitle, NewDescription);
             todos.Add(item);
+        }
+        if (item is null)
+        {
+            throw new Exception("Provided ID did not match a db entry");
         }
         return item.Id;
 

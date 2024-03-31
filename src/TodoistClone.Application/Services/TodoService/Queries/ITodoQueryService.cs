@@ -5,5 +5,5 @@ namespace TodoistClone.Application.Services.TodoService.Queries;
 public interface ITodoQueryService
 {
     Task<TodoItemDTO> GetById(Guid id);
-    Task<IEnumerable<TodoItemDTO>> GetAll();
+    Task<List<TodoItemDTO>> GetAll();
 }

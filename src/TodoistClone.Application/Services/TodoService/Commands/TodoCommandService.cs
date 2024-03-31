@@ -8,24 +8,18 @@ using TodoistClone.Domain.Entities;
 
 namespace TodoistClone.Application.Services.TodoService.Commands;
 
-public class TodoCommandService : ITodoCommandService
+public class TodoCommandService(ITodoItemRepository todoitemrepository) : ITodoCommandService
 {
-    private readonly ITodoItemRepository _todoitemrepository;
-
-    public TodoCommandService(ITodoItemRepository todoitemrepository)
-    {
-        _todoitemrepository = todoitemrepository;
-    }
+    private readonly ITodoItemRepository _todoitemrepository = todoitemrepository;
 
     public async Task<TodoItemCreateResult> Add(TodoItemCreateRequest request)
     {
         //!Validation 
-        var todoItem = new TodoItem() {
-            Id = new Guid(),
-            Title = request.Title,
-            Description = request.Description,
-            Done = request.Done
-        };
+        var todoItem = new TodoItem( 
+            request.Title,
+            request.Description,
+            request.Done
+        );
 
         Guid id = await _todoitemrepository.Add(todoItem);
 
@@ -42,18 +36,11 @@ public class TodoCommandService : ITodoCommandService
         return respone;
     }
 
-    public async Task<TodoItemUpdateResult> Update(TodoItemDTO data)
+    public async Task<TodoItemUpdateResult> Update(TodoItemUpdateRequest data)
     {
         //!Validation
 
-        var helperItem = new TodoItem()
-        {
-            Id = data.Id,
-            Title = data.Title,
-            Description = data.Description,
-            Done = data.Done
-        };
-        Guid id = await _todoitemrepository.Update(data.Id, helperItem);
+        Guid id = await _todoitemrepository.Update(data.Id, data.NewTitle, data.NewDescription);
 
         var respone = new TodoItemUpdateResult(id);
 

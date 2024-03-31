@@ -1,4 +1,5 @@
-namespace TodoistClone.Contracts.TodoContract {
+namespace TodoistClone.Contracts.TodoContract.Add
+{
     public record TodoPostRequest(
         string Title,
         string Description,

@@ -10,7 +10,7 @@ namespace TodoistClone.Infrastructure.Persistence
 {
     public class UserRepositoryInMemory : IUserRepository
     {
-        private static List<User> _users = new List<User>();
+        private static List<User> _users = [];
         public void Add(User user)
         {
             _users.Add(user);

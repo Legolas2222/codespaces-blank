@@ -68,7 +68,7 @@ namespace TodoistClone.Api.Controllers
                 request.NewCompletionStatus
             ));
 
-            var response = new TodoPostResponse(result.Id);
+            var response = new TodoItemUpdateResult(result.Id);
             return Ok(response);
         }
 

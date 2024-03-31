@@ -16,16 +16,10 @@ namespace TodoistClone.Api.Controllers
 {
     [ApiController]
     [Route("todos")]
-    public class TodosController : ControllerBase
+    public class TodosController(ITodoQueryService todoQueryService, ITodoCommandService todoCommandService) : ControllerBase
     {
-        private readonly ITodoQueryService _todoQueryService;
-        private readonly ITodoCommandService _todoCommandService;
-
-        public TodosController(ITodoQueryService todoQueryService, ITodoCommandService todoCommandService)
-        {
-            _todoQueryService = todoQueryService;
-            _todoCommandService = todoCommandService;
-        }
+        private readonly ITodoQueryService _todoQueryService = todoQueryService;
+        private readonly ITodoCommandService _todoCommandService = todoCommandService;
 
         [HttpGet("getById")]
         public async Task<IActionResult> GetById([FromHeader] string id)
@@ -50,7 +44,7 @@ namespace TodoistClone.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var todos = await _todoQueryService.GetAll();
-            List<TodoGetResponse> r = new();
+            List<TodoGetResponse> r = [];
             foreach (TodoItemDTO item in todos) 
             {
                 r.Add(new TodoGetResponse(

@@ -8,14 +8,9 @@ using TodoistClone.Domain.Entities;
 
 namespace TodoistClone.Application.Services.TodoService.Commands;
 
-public class TodoCommandService : ITodoCommandService
+public class TodoCommandService(ITodoItemRepository todoitemrepository) : ITodoCommandService
 {
-    private readonly ITodoItemRepository _todoitemrepository;
-
-    public TodoCommandService(ITodoItemRepository todoitemrepository)
-    {
-        _todoitemrepository = todoitemrepository;
-    }
+    private readonly ITodoItemRepository _todoitemrepository = todoitemrepository;
 
     public async Task<TodoItemCreateResult> Add(TodoItemCreateRequest request)
     {

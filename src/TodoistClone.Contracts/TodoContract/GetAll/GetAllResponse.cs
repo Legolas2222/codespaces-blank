@@ -4,5 +4,5 @@ namespace TodoistClone.Contracts.TodoContract.GetAll;
 
 public record GetAllResponse
 (
-    List<TodoGetResponse> todos
+    List<TodoGetResponse> Todos
 );

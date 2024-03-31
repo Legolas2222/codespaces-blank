@@ -7,7 +7,7 @@ public interface ITodoItemRepository
     public Task<TodoItem> GetById(Guid id);
     public Task<IEnumerable<TodoItem>> GetAll();
     public Task<Guid> Add(TodoItem item);
-    public Task<Guid> Update(Guid id, string NewTitle, string NewDescription);
+    public Task<Guid> Update(Guid id, string? NewTitle, string? NewDescription);
     public Task<bool> Delete(Guid id);
 
 }

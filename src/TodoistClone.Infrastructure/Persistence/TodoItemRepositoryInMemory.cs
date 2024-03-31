@@ -9,6 +9,10 @@ public class TodoItemRepositoryInMemory : ITodoItemRepository
     public async Task<TodoItem> GetById(Guid id)
     {
         var item = todos.Find(x => x.Id == id);
+        if (item is null)
+        {
+            throw new Exception("Provided ID did not match a db entry");
+        }
         return item;
     }
     public async Task<IEnumerable<TodoItem>> GetAll()
@@ -22,7 +26,7 @@ public class TodoItemRepositoryInMemory : ITodoItemRepository
         return item.Id;
     }
 
-    public async Task<Guid> Update(Guid id, string NewTitle, string NewDescription)
+    public async Task<Guid> Update(Guid id, string? NewTitle, string? NewDescription)
     {
         var item = todos.Find(x => x.Id == id);
         if (item is not null)
@@ -30,6 +34,10 @@ public class TodoItemRepositoryInMemory : ITodoItemRepository
             todos.Remove(item);
             item.Update(NewTitle, NewDescription);
             todos.Add(item);
+        }
+        if (item is null)
+        {
+            throw new Exception("Provided ID did not match a db entry");
         }
         return item.Id;
 

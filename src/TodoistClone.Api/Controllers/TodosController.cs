@@ -6,6 +6,7 @@ using TodoistClone.Application.Services.TodoService.Commands.DTOs.Delete;
 using TodoistClone.Application.Services.TodoService.Queries;
 using TodoistClone.Contracts.TodoContract;
 using TodoistClone.Application.Services.TodoService.Common.DTOs;
+using System.Text.Json;
 
 namespace TodoistClone.Api.Controllers
 {
@@ -41,6 +42,18 @@ namespace TodoistClone.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var todos = await _todoQueryService.GetAll();
+
+            JsonSerializerOptions options = new()
+            {
+                WriteIndented = true
+            };
+            var jsonString = JsonSerializer.Serialize(todos, options);
+            return Ok(jsonString);
+        }
 
         [HttpPost("add")]
         public async Task<IActionResult> Add(TodoPostRequest request)

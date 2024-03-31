@@ -13,20 +13,21 @@ public class TodoQueryService : ITodoQueryService
     }
 
 
-    public async Task<IEnumerable<TodoItemDTO>> GetAll()
+    public async Task<List<TodoItemDTO>> GetAll()
     {
         //! Validation
         var result = await _todoItemRepository.GetAll(); 
 
-        var respone = new List<TodoItemDTO>();
+        var response = new List<TodoItemDTO>();
         foreach (var item in result) {
-            respone.Add(new TodoItemDTO(
+            response.Add(new TodoItemDTO(
                 item.Id,
                 item.Title,
                 item.Description,
                 item.Done));
         }
-        return (IEnumerable<TodoItemDTO>)result;
+        
+        return response;
     }
 
     public async Task<TodoItemDTO> GetById(Guid id)

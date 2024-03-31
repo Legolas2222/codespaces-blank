@@ -41,11 +41,11 @@ public class TodoCommandService : ITodoCommandService
         return respone;
     }
 
-    public async Task<TodoItemUpdateResult> Update(TodoItemDTO data)
+    public async Task<TodoItemUpdateResult> Update(TodoItemUpdateRequest data)
     {
         //!Validation
 
-        Guid id = await _todoitemrepository.Update(data.Id, data.Title, data.Description, data.Done);
+        Guid id = await _todoitemrepository.Update(data.Id, data.NewTitle, data.NewDescription);
 
         var respone = new TodoItemUpdateResult(id);
 

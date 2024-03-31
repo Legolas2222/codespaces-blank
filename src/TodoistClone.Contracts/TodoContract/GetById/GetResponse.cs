@@ -1,4 +1,4 @@
-namespace TodoistClone.Contracts.TodoContract
+namespace TodoistClone.Contracts.TodoContract.GetById
 {
     public record TodoGetResponse(
         Guid Id,

@@ -9,6 +9,10 @@
     <ProjectReference Include="..\TodoistClone.Domain\TodoistClone.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\TodoService\Queries\DTOs\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TodoistClone.Application\TodoistClone.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TodoContract\Common\" />
+  </ItemGroup>
+
 </Project>

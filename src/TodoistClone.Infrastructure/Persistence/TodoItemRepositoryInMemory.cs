@@ -5,7 +5,7 @@ namespace TodoistClone.Infrastructure.Persistence;
 
 public class TodoItemRepositoryInMemory : ITodoItemRepository
 {
-    private List<TodoItem> todos = new();
+    private static List<TodoItem> todos = new();
     public async Task<TodoItem> GetById(Guid id)
     {
         var item = todos.Find(x => x.Id == id);
@@ -22,7 +22,7 @@ public class TodoItemRepositoryInMemory : ITodoItemRepository
         return item.Id;
     }
 
-    public async Task<Guid> Update(Guid id, string NewTitle, string NewDescription, bool NewCompletionStatus)
+    public async Task<Guid> Update(Guid id, string NewTitle, string NewDescription)
     {
         var item = todos.Find(x => x.Id == id);
         if (item is not null)

@@ -2,7 +2,7 @@
 
 namespace TodoistClone.Contracts.TodoContract.GetAll;
 
-public record GetAllResponse
+public record TodoGetAllResponse
 (
     List<TodoGetResponse> Todos
 );

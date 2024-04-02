@@ -10,16 +10,10 @@ using TodoistClone.Domain.Entities;
 
 namespace TodoistClone.Application.Services.Authentication.Commands;
 
-public class AuthenticationCommandService : IAuthenticationCommandService
+public class AuthenticationCommandService(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository) : IAuthenticationCommandService
 {
-    private IJwtTokenGenerator _jwtTokenGenerator;
-    private IUserRepository _userRepository;
-
-    public AuthenticationCommandService(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
-    {
-        _jwtTokenGenerator = jwtTokenGenerator;
-        _userRepository = userRepository;
-    }
+    private readonly IJwtTokenGenerator _jwtTokenGenerator = jwtTokenGenerator;
+    private readonly IUserRepository _userRepository = userRepository;
 
     public AuthenticationResult Register(string firstName, string lastName, string email, string password)
     {

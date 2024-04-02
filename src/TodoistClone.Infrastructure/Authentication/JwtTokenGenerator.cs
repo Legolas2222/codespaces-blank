@@ -1,25 +1,16 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using TodoistClone.Application.Common.Interfaces.Authentication;
 using TodoistClone.Application.Common.Interfaces.Services;
 using TodoistClone.Domain.Entities;
 
 namespace TodoistClone.Infrastructure.Authentication
 {
-    public class JwtTokenGenerator : IJwtTokenGenerator
+    public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider) : IJwtTokenGenerator
     {
-        private readonly IDateTimeProvider _dateTimeProvider;
-
-        public JwtTokenGenerator(IDateTimeProvider dateTimeProvider)
-        {
-            _dateTimeProvider = dateTimeProvider;
-        }
+        private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
 
         public string GenerateToken(User user) 
         {

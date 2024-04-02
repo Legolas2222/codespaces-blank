@@ -54,7 +54,7 @@ namespace TodoistClone.Api.Controllers
                     item.Done
                     ));
             }
-            return Ok(new GetAllResponse(r));
+            return Ok(new TodoGetAllResponse(r));
 
         }
 

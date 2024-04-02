@@ -7,18 +7,12 @@ namespace TodoistClone.Api.Controllers
 {
     [ApiController]
     [Route("auth")]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController(
+        IAuthenticationCommandService authenticationCommandService,
+        IAuthenticationQueryService authenticationQueryService) : ControllerBase
     {
-        private readonly IAuthenticationCommandService _authenticationCommandService;
-        private readonly IAuthenticationQueryService _authenticationQueryService;
-
-        public AuthenticationController(
-            IAuthenticationCommandService authenticationCommandService,
-            IAuthenticationQueryService authenticationQueryService)
-        {
-            _authenticationCommandService = authenticationCommandService;
-            _authenticationQueryService = authenticationQueryService;
-        }
+        private readonly IAuthenticationCommandService _authenticationCommandService = authenticationCommandService;
+        private readonly IAuthenticationQueryService _authenticationQueryService = authenticationQueryService;
 
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest request)
@@ -30,10 +24,10 @@ namespace TodoistClone.Api.Controllers
                 request.Password);
 
             var response = new AuthenticationResponse(
-                authResult.user.Id,
-                authResult.user.FirstName,
-                authResult.user.LastName,
-                authResult.user.Email,
+                authResult.User.Id,
+                authResult.User.FirstName,
+                authResult.User.LastName,
+                authResult.User.Email,
                 authResult.Token);
 
             return Ok(response);
@@ -47,10 +41,10 @@ namespace TodoistClone.Api.Controllers
                 request.Password);
 
             var response = new AuthenticationResponse(
-                authResult.user.Id,
-                authResult.user.FirstName,
-                authResult.user.LastName,
-                authResult.user.Email,
+                authResult.User.Id,
+                authResult.User.FirstName,
+                authResult.User.LastName,
+                authResult.User.Email,
                 authResult.Token);
 
             return Ok(response);

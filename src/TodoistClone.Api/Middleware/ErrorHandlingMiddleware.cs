@@ -4,13 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace TodoistClone.Api.Middleware;
 
-public class ErrorHandlingMiddlware
+public class ErrorHandlingMiddlware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public ErrorHandlingMiddlware(RequestDelegate next) {
-        _next = next;
-    }
+    private readonly RequestDelegate _next = next;
 
     public async Task Invoke(HttpContext context) {
         try {

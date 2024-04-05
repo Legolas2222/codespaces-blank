@@ -7,7 +7,7 @@ namespace TodoistClone.Application.Services.TodoService.Commands;
 
 public interface ITodoCommandService
 {
-    Task<TodoItemCreateResult> Add(TodoItemCreateRequest request);
-    Task<TodoItemUpdateResult> Update(TodoItemUpdateRequest newTodo);
-    Task<TodoItemDeleteResult> Delete(TodoItemDeleteRequest request);
+    Task Add(TodoItemCreateRequest request);
+    Task Update(TodoItemUpdateRequest newTodo);
+    Task Delete(TodoItemDeleteRequest request);
 }

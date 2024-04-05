@@ -61,44 +61,36 @@ namespace TodoistClone.Api.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add(TodoPostRequest request)
         {
-            var todoResult = await _todoCommandService.Add(
+             await _todoCommandService.Add(
                 new TodoItemCreateRequest(
                 request.Title,
                 request.Description,
                 request.Done
                 ));
 
-            var response = new TodoPostResponse(todoResult.Id);
 
-            return Ok(response);
+            return Ok();
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update(TodoUpdateRequest request)
         {
-            var result = await _todoCommandService.Update(
+            await _todoCommandService.Update(
             new TodoItemUpdateRequest(
                 request.Id,
                 request.NewTitle,
                 request.NewDescription
             ));
 
-            var response = new TodoItemUpdateResult(result.Id);
-            return Ok(response);
+            return Ok();
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id is null)
-            {
-                return BadRequest();
-            }
-            var todoResult = await _todoCommandService.Delete(new TodoItemDeleteRequest(Guid.Parse(id)));
+            await _todoCommandService.Delete(new TodoItemDeleteRequest(id));
 
-            var response = new TodoDeleteRespone(todoResult.Done);
-
-            return Ok(response);
+            return Ok();
         }
     }
 }

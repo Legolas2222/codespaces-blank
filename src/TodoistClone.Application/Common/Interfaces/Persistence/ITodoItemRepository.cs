@@ -4,10 +4,10 @@ namespace TodoistClone.Application.Common.Interfaces.Persistence;
 
 public interface ITodoItemRepository
 {
-    public Task<TodoItem> GetById(Guid id);
-    public Task<IEnumerable<TodoItem>> GetAll();
-    public Task<Guid> Add(TodoItem item);
-    public Task<Guid> Update(Guid id, string? NewTitle, string? NewDescription);
-    public Task<bool> Delete(Guid id);
+    public Task<TodoItem?> GetByIdAsync(Guid id);
+    public Task<List<TodoItem>> GetAllAsync();
+    public Task Add(TodoItem item);
+    public Task Update(Guid id, string? NewTitle, string? NewDescription);
+    public Task Delete(Guid id);
 
 }

@@ -12,7 +12,7 @@ public class TodoCommandService(ITodoItemRepository todoitemrepository) : ITodoC
 {
     private readonly ITodoItemRepository _todoitemrepository = todoitemrepository;
 
-    public async Task<TodoItemCreateResult> Add(TodoItemCreateRequest request)
+    public Task Add(TodoItemCreateRequest request)
     {
         //!Validation 
         var todoItem = new TodoItem( 
@@ -21,30 +21,22 @@ public class TodoCommandService(ITodoItemRepository todoitemrepository) : ITodoC
             request.Done
         );
 
-        Guid id = await _todoitemrepository.Add(todoItem);
-
-        var respone = new TodoItemCreateResult(id);
-        return respone;
+        return _todoitemrepository.Add(todoItem);
     }
 
-    public async Task<TodoItemDeleteResult> Delete(TodoItemDeleteRequest request)
-    {
+    public Task Delete(TodoItemDeleteRequest request)
+    { 
         //!Validation 
-        bool result = await _todoitemrepository.Delete(request.Id);
+        return _todoitemrepository.Delete(request.Id);
 
-        var respone = new TodoItemDeleteResult(result);
-        return respone;
     }
 
-    public async Task<TodoItemUpdateResult> Update(TodoItemUpdateRequest data)
+    public Task Update(TodoItemUpdateRequest data)
     {
         //!Validation
 
-        Guid id = await _todoitemrepository.Update(data.Id, data.NewTitle, data.NewDescription);
+        return _todoitemrepository.Update(data.Id, data.NewTitle, data.NewDescription);
 
-        var respone = new TodoItemUpdateResult(id);
-
-        return respone;
 
     }
 }

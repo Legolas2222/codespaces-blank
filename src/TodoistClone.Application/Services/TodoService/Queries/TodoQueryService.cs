@@ -9,24 +9,25 @@ public class TodoQueryService : ITodoQueryService
     private readonly ITodoItemRepository _todoItemRepository;
     public TodoQueryService(ITodoItemRepository todoItemRepository)
     {
-        this._todoItemRepository = todoItemRepository;        
+        this._todoItemRepository = todoItemRepository;
     }
 
 
     public async Task<List<TodoItemDTO>> GetAll()
     {
         //! Validation
-        var result = await _todoItemRepository.GetAllAsync(); 
+        var result = await _todoItemRepository.GetAllAsync();
 
         var response = new List<TodoItemDTO>();
-        foreach (var item in result) {
+        foreach (var item in result)
+        {
             response.Add(new TodoItemDTO(
                 item.Id,
                 item.Title,
                 item.Description,
                 item.Done));
         }
-        
+
         return response;
     }
 
@@ -42,9 +43,9 @@ public class TodoQueryService : ITodoQueryService
             result.Title,
             result.Description,
             result.Done);
-        return respone;    
+            return respone;
         }
         throw new Exception($"The Todoitem with id {id} could not be found");
-        
+
     }
 }

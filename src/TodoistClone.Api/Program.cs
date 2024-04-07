@@ -1,5 +1,3 @@
-using TodoistClone.Api.Filters;
-using TodoistClone.Api.Middleware;
 using TodoistClone.Application;
 using TodoistClone.Infrastructure;
 

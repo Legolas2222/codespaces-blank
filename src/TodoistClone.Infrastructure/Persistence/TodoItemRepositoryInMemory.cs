@@ -5,46 +5,39 @@ namespace TodoistClone.Infrastructure.Persistence;
 
 public class TodoItemRepositoryInMemory : ITodoItemRepository
 {
-    private static List<TodoItem> todos = [];  
-    public async Task<TodoItem> GetByIdAsync(Guid id)
+    private static List<TodoItem> todos = [];
+    public Task<TodoItem?> GetByIdAsync(Guid id)
     {
         var item = todos.Find(x => x.Id == id);
-        return item is null ? throw new Exception("Provided ID did not match a db entry") : item;
+        return Task.FromResult(item);
     }
-    public async Task<List<TodoItem>> GetAllAsync()
+    public Task<List<TodoItem>> GetAllAsync()
     {
-        return todos;
+        return Task.FromResult(todos);
     }
 
-    public async Task Add(TodoItem item)
+    public void Add(TodoItem item)
     {
         todos.Add(item);
     }
 
-    public async Task Update(Guid id, string? NewTitle, string? NewDescription)
+    public void Update(TodoItem item)
     {
-        var item = todos.Find(x => x.Id == id);
-        if (item is not null)
+        var oldItem = todos.Find(x => x.Id == item.Id);
+        if (oldItem is not null)
         {
-            todos.Remove(item);
-            item.Update(NewTitle, NewDescription);
+            todos.Remove(oldItem);
             todos.Add(item);
         }
-        if (item is null)
+        if (oldItem is null)
         {
             throw new Exception("Provided ID did not match a db entry");
         }
 
-
-
     }
-    public async Task Delete(Guid id)
+    public void Delete(TodoItem item)
     {
-        var item = todos.Find(x => x.Id == id);
-        if (item is not null)
-        {
-            todos.Remove(item);
-        }
+        todos.Remove(item);
 
     }
 

@@ -1,16 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoistClone.Application.Services.TodoService.Commands;
-using TodoistClone.Application.Services.TodoService.Commands.DTOs.Update;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Create;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Delete;
-using TodoistClone.Application.Services.TodoService.Queries;
+using TodoistClone.Application.Services.TodoService.Commands.DTOs.Update;
 using TodoistClone.Application.Services.TodoService.Common.DTOs;
-using System.Text.Json;
-using TodoistClone.Contracts.TodoContract.GetById;
+using TodoistClone.Application.Services.TodoService.Queries;
 using TodoistClone.Contracts.TodoContract.Add;
-using TodoistClone.Contracts.TodoContract.Update;
 using TodoistClone.Contracts.TodoContract.GetAll;
-using TodoistClone.Contracts.TodoContract.Delete;
+using TodoistClone.Contracts.TodoContract.GetById;
+using TodoistClone.Contracts.TodoContract.Update;
 
 namespace TodoistClone.Api.Controllers
 {
@@ -45,7 +43,7 @@ namespace TodoistClone.Api.Controllers
         {
             var todos = await _todoQueryService.GetAll();
             List<TodoGetResponse> r = [];
-            foreach (TodoItemDTO item in todos) 
+            foreach (TodoItemDTO item in todos)
             {
                 r.Add(new TodoGetResponse(
                     item.Id,
@@ -61,12 +59,12 @@ namespace TodoistClone.Api.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add(TodoPostRequest request)
         {
-             await _todoCommandService.Add(
-                new TodoItemCreateRequest(
-                request.Title,
-                request.Description,
-                request.Done
-                ));
+            await _todoCommandService.Add(
+               new TodoItemCreateRequest(
+               request.Title,
+               request.Description,
+               request.Done
+               ));
 
 
             return Ok();

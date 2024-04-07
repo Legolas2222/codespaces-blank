@@ -1,9 +1,7 @@
-using System.ComponentModel;
 using TodoistClone.Application.Common.Interfaces.Persistence;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Create;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Delete;
 using TodoistClone.Application.Services.TodoService.Commands.DTOs.Update;
-using TodoistClone.Application.Services.TodoService.Common.DTOs;
 using TodoistClone.Domain.Entities;
 
 namespace TodoistClone.Application.Services.TodoService.Commands;
@@ -15,28 +13,38 @@ public class TodoCommandService(ITodoItemRepository todoitemrepository) : ITodoC
     public Task Add(TodoItemCreateRequest request)
     {
         //!Validation 
-        var todoItem = new TodoItem( 
+        var todoItem = new TodoItem(
             request.Title,
             request.Description,
             request.Done
         );
 
-        return _todoitemrepository.Add(todoItem);
+        _todoitemrepository.Add(todoItem);
+        return Task.CompletedTask;
     }
 
     public Task Delete(TodoItemDeleteRequest request)
-    { 
+    {
         //!Validation 
-        return _todoitemrepository.Delete(request.Id);
+        var item = _todoitemrepository.GetByIdAsync(request.Id);
+        if (item.Result is null)
+        {
+            throw new Exception("Provided ID did not match a db entry");
+        }
+        _todoitemrepository.Delete(item.Result);
+        return Task.CompletedTask;
 
     }
 
     public Task Update(TodoItemUpdateRequest data)
     {
         //!Validation
-
-        return _todoitemrepository.Update(data.Id, data.NewTitle, data.NewDescription);
-
-
+        var item = _todoitemrepository.GetByIdAsync(data.Id);
+        if (item.Result is null)
+        {
+            throw new Exception("Provided ID did not match a db entry");
+        }
+        _todoitemrepository.Delete(item.Result);
+        return Task.CompletedTask;
     }
 }

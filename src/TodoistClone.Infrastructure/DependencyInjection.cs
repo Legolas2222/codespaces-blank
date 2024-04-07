@@ -16,7 +16,7 @@ namespace TodoistClone.Infrastructure
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<IUserRepository, UserRepositoryInMemory>();
-            services.AddScoped<ITodoItemRepository, TodoItemRepositoryInMemory>();
+            services.AddScoped<ITodoItemRepository, TodoItemRepositoryDb>();
             return services;
         }
 

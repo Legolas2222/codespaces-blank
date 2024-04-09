@@ -9,6 +9,7 @@ namespace TodoistClone.Infrastructure.Persistence.DbModels
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseMongoDb("mongodb://localhost:27017", "testdb");
             base.OnConfiguring(optionsBuilder);
         }
     }

@@ -364,4 +364,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Local files for docker compose mongo image / local database in docker
-src/Database/data
+tests/TestDatabase/data

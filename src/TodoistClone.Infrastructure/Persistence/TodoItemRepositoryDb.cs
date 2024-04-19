@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoistClone.Application.Common.Interfaces.Persistence;
 using TodoistClone.Domain.Entities;
+using TodoistClone.Infrastructure.Persistence.DbModels;
 
 namespace TodoistClone.Infrastructure.Persistence
 {
     internal class TodoItemRepositoryDb : BaseRepository<TodoItem>, ITodoItemRepository
     {
-        public TodoItemRepositoryDb(DbContext context) : base(context)
+        public TodoItemRepositoryDb(TodoItemContext context) : base(context)
         {
 
         }
@@ -14,7 +15,6 @@ namespace TodoistClone.Infrastructure.Persistence
         public Task<List<TodoItem>> GetAllAsync()
         {
             return dbContext.Set<TodoItem>().ToListAsync();
-
         }
 
         public Task<TodoItem?> GetByIdAsync(Guid id)

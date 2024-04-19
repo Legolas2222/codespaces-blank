@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using TodoistClone.Domain.Entities;
-
 namespace TodoistClone.Infrastructure.Persistence.DbModels
 {
-    internal class TodoItemContext : DbContext
+    public class TodoItemContext : DbContext
     {
         public DbSet<TodoItem> TodoItems { get; init; }
 
@@ -18,19 +17,10 @@ namespace TodoistClone.Infrastructure.Persistence.DbModels
             base.OnModelCreating(modelBuilder);
         }
 
-        public static TodoItemContext Create(IMongoDatabase db)
-        {
-            var options = new DbContextOptionsBuilder<TodoItemContext>()
-                .UseMongoDB(db.Client, db.DatabaseNamespace.DatabaseName)
-                .Options;
-                
 
-            return new TodoItemContext(options);
-        }
-
-        public TodoItemContext(DbContextOptions options) : base(options)
+        public TodoItemContext(DbContextOptions<TodoItemContext> options) : base(options)
         {
-            
+
         }
     }
 }

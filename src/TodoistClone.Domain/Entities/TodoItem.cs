@@ -1,9 +1,12 @@
 using TodoistClone.Domain.Primitives;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace TodoistClone.Domain.Entities
 {
     public class TodoItem(string Title, string Description, bool Done) : Entity
     {
+        [BsonRequired]
+
         public string Title { get; private set; } = Title;
         public string Description { get; private set; } = Description;
         public bool Done { get; private set; } = Done;

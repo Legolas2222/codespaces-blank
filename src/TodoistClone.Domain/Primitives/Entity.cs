@@ -1,7 +1,10 @@
-﻿namespace TodoistClone.Domain.Primitives
+﻿using MongoDB.Bson.Serialization.Attributes;
+namespace TodoistClone.Domain.Primitives
 {
     public abstract class Entity
     {
+
+        [BsonRequired]
         public Guid Id { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }

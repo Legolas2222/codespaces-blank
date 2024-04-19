@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 using TodoistClone.Application.Common.Interfaces.Authentication;
 using TodoistClone.Application.Common.Interfaces.Persistence;
 using TodoistClone.Application.Common.Interfaces.Services;
 using TodoistClone.Infrastructure.Authentication;
 using TodoistClone.Infrastructure.Persistence;
+using TodoistClone.Infrastructure.Persistence.DbModels;
 using TodoistClone.Infrastructure.Services;
 
 namespace TodoistClone.Infrastructure
@@ -16,7 +19,8 @@ namespace TodoistClone.Infrastructure
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<IUserRepository, UserRepositoryInMemory>();
-            services.AddScoped<ITodoItemRepository, TodoItemRepositoryDb>();
+            //services.AddDbContext<TodoItemContext>(options => options.UseMongoDB(new MongoClient("mongodb://localhost:27017"), "TodoistClone"));
+            services.AddScoped<ITodoItemRepository, TodoItemRepositoryInMemory>();
             return services;
         }
 

@@ -7,7 +7,7 @@ namespace TodoistClone.Infrastructure.Persistence
 {
     internal class TodoItemRepositoryDb : BaseRepository<TodoItem>, ITodoItemRepository
     {
-        public TodoItemRepositoryDb(TodoItemContext context) : base(context)
+        public TodoItemRepositoryDb(TodoistContext context) : base(context)
         {
 
         }

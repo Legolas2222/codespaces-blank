@@ -19,8 +19,8 @@ namespace TodoistClone.Infrastructure
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<IUserRepository, UserRepositoryInMemory>();
-            //services.AddDbContext<TodoItemContext>(options => options.UseMongoDB(new MongoClient("mongodb://localhost:27017"), "TodoistClone"));
-            services.AddScoped<ITodoItemRepository, TodoItemRepositoryInMemory>();
+            services.AddDbContext<TodoistContext>();
+            services.AddScoped<ITodoItemRepository, TodoItemRepositoryDb>();
             return services;
         }
 

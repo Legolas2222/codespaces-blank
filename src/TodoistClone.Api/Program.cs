@@ -1,6 +1,6 @@
 using TodoistClone.Application;
 using TodoistClone.Infrastructure;
-using TodoistClone.Infrastructure.Persistence.Config;
+using TodoistClone.Infrastructure.Persistence.config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 builder.Services.AddControllers(/*options => options.Filters.Add<ErrorHandlingFilterAttribute>()*/);
+builder.Services.AddDatabaseConnection("Test", "TodosDev");
 /*
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -25,7 +26,7 @@ var app = builder.Build();
 
 {
     //app.UseHttpsRedirection();
-    //app.UseMiddleware<ErrorHandlingMiddlware>();
+    //app.UseMiddleware<ErrorHandlingMiddleware>();
     app.UseExceptionHandler("/error");
     app.UseHttpsRedirection();
     //app.UseAuthorization();

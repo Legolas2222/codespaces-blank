@@ -3,7 +3,7 @@ using TodoistClone.Application.Common.Interfaces.Persistence;
 using TodoistClone.Domain.Primitives;
 namespace TodoistClone.Infrastructure.Persistence
 {
-    internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : Entity
+    internal class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : Entity
     {
         protected readonly DbContext dbContext;
 

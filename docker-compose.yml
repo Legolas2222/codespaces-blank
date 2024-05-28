@@ -12,5 +12,15 @@ services:
       - 28017:28017
     volumes:
       - ./data:/data/db
-    networks:
-      - testNetwork
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: test
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/app
+    environment:
+      - MONGO_URI=mongodb://root:test1234@mongodb:27017/TodosDev
+      - NODE_ENV=test
